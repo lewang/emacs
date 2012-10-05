@@ -592,8 +592,9 @@ This allows you to manually remove highlighting from uninteresting changes."
             ;; text then remove the deletion marking, but set it to
 	  ;; changed otherwise its highlighting disappears.
 	  (if (eq (get-text-property end 'hilit-chg) 'hilit-chg-delete)
-	      (progn
-		(put-text-property end (+ end 1) 'hilit-chg 'hilit-chg)
+              (save-restriction
+                (widen)
+                (put-text-property end (+ end 1) 'hilit-chg 'hilit-chg)
 		(if highlight-changes-visible-mode
 		    (hilit-chg-fixup beg (+ end 1))))))
           (unless no-property-change
